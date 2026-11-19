@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ahal Abbas // B.Tech Computer Science (AI & ML) at SCTCE Trivandrum. Cinematic Superhero-Inspired Portfolio.">
+  <meta name="theme-color" content="#050505">
+  <title>AHAL ABBAS // HEROIC AI &amp; ML EXPLORER</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dual">
+
+  <!-- Interactive Mouse Spotlight -->
+  <div id="cursor-glow" class="cursor-glow"></div>
+  <div id="cursor-dot" class="cursor-dot"></div>
+
+  <!-- Audio Ambience & Theme Floating Bar -->
+  <aside class="quick-hud-controls" aria-label="Cinematic Controls">
+    <div class="hud-pill theme-mode-pill" title="Toggle Superhero Atmosphere">
+      <span class="hud-label">ATMOSPHERE:</span>
+      <button type="button" class="mode-btn active" data-mode="dual" id="mode-dual" title="Spider-Man & Batman Multiverse">DUAL</button>
+      <button type="button" class="mode-btn" data-mode="spider" id="mode-spider" title="Queens Web-Slinger Focus">SPIDER</button>
+      <button type="button" class="mode-btn" data-mode="batman" id="mode-batman" title="Gotham Dark Knight Focus">BATMAN</button>
+    </div>
+
+    <div class="hud-pill audio-pill">
+      <button type="button" id="audio-toggle-btn" class="audio-btn" title="Toggle Cinematic Ambience & FX" aria-label="Toggle Sound">
+        <span class="audio-eq-bars">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+          <span class="eq-bar bar-4"></span>
+        </span>
+        <span class="audio-status-text">AUDIO: OFF</span>
+      </button>
+    </div>
+
+    <button type="button" class="hud-pill customize-btn" id="open-customize-modal" title="Customize Your Details">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 20h9"></path>
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+      </svg>
+      <span>CUSTOMIZE IDENTITY</span>
+    </button>
+  </aside>
+
+  <!-- Background Canvas (Spider-Man, Batman, Skyline, Fog, Web & Cape Physics) -->
+  <canvas id="cinematic-canvas"></canvas>
+  <div class="cinematic-overlay-vignette"></div>
+  <div class="cinematic-scanlines"></div>
+
+  <!-- Navigation Bar -->
+  <header class="site-header" id="navbar">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo" aria-label="Portfolio Home">
+        <div class="logo-emblem">
+          <!-- Dual Spider & Bat Crest SVG -->
+          <svg viewBox="0 0 100 100" class="crest-svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="crestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff2a5f"/>
+                <stop offset="50%" stop-color="#7928ca"/>
+                <stop offset="100%" stop-color="#00b4d8"/>
+              </linearGradient>
+            </defs>
+            <!-- Left Bat Wing -->
+            <path d="M50 30 C 45 15, 30 18, 20 28 C 24 38, 22 52, 10 58 C 22 64, 30 78, 50 90 Z" fill="#00b4d8" opacity="0.85"/>
+            <!-- Right Spider Wing/Legs -->
+            <path d="M50 30 C 55 15, 70 18, 80 28 C 76 38, 78 52, 90 58 C 78 64, 70 78, 50 90 Z" fill="#ff2a5f" opacity="0.85"/>
+            <!-- Center Sharp Divider -->
+            <line x1="50" y1="18" x2="50" y2="92" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Core Tech Diamond -->
+            <polygon points="50,22 56,32 50,42 44,32" fill="#ffffff"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">AHAL<span class="brand-dot">.ABBAS</span></span>
+          <span class="brand-tag">SCTCE // CSE (AI &amp; ML)</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-link active"><span class="nav-num">01</span><span class="nav-text">HERO</span></a></li>
+          <li><a href="#about" class="nav-link"><span class="nav-num">02</span><span class="nav-text">ABOUT</span></a></li>
+          <li><a href="#skills" class="nav-link"><span class="nav-num">03</span><span class="nav-text">SKILLS</span></a></li>
+          <li><a href="#experience" class="nav-link"><span class="nav-num">04</span><span class="nav-text">JOURNEY</span></a></li>
+          <li><a href="#contact" class="nav-link"><span class="nav-num">05</span><span class="nav-text">CONTACT</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#contact" class="btn btn-sm btn-outline-glow">
+          <span class="btn-inner">
+            <span class="status-live-dot"></span>
+            <span>LET'S TALK</span>
+          </span>
+        </a>
+
+        <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main id="main-content">
+
+    <!-- ==================== 1. HERO SECTION ==================== -->
+    <section id="hero" class="hero-section">
+      <div class="hero-atmosphere-glow glow-red"></div>
+      <div class="hero-atmosphere-glow glow-blue"></div>
+
+      <div class="container hero-container">
+        <!-- Status Pill -->
+        <div class="hero-badge-wrapper fade-in-up">
+          <div class="hero-badge">
+            <span class="radar-dot"></span>
+            <span class="badge-text">SCTCE TRIVANDRUM // B.TECH CSE (AI &amp; ML) FIRST YEAR</span>
+            <span class="badge-code">SYS-ONLINE</span>
+          </div>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="hero-heading fade-in-up" data-delay="150">
+          <span class="hero-greet">HEY, I'M</span>
+          <span class="hero-name-container">
+            <span class="hero-name editable-name" id="display-hero-name" title="Click to customize your name">AHAL ABBAS</span>
+            <button type="button" class="quick-name-edit-icon" id="quick-edit-name-btn" title="Edit your name">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </button>
+          </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <div class="hero-subtitle-wrapper fade-in-up" data-delay="300">
+          <p class="hero-subtitle">
+            <span class="sub-word sub-red">Creative Mind.</span>
+            <span class="sub-sep">/</span>
+            <span class="sub-word sub-purple">Future Developer.</span>
+            <span class="sub-sep">/</span>
+            <span class="sub-word sub-blue">Digital Explorer.</span>
+          </p>
+        </div>
+
+        <!-- Short Introduction -->
+        <p class="hero-description fade-in-up" data-delay="450">
+          I build digital experiences, explore technology and transform creative ideas into reality. Currently mastering the frontiers of Artificial Intelligence and Machine Learning at SCTCE Trivandrum.
+        </p>
+
+        <!-- Superhero Duality Pillars -->
+        <div class="hero-pillars fade-in-up" data-delay="600">
+          <div class="pillar-card spider-pillar">
+            <div class="pillar-header">
+              <span class="pillar-icon">
+                <!-- Spider Web Icon -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff2a5f" stroke-width="2">
+                  <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"></path>
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <circle cx="12" cy="12" r="8"></circle>
+                </svg>
+              </span>
+              <span class="pillar-tag">SPIDER AGILITY</span>
+            </div>
+            <p class="pillar-text">Fluid UI animations, high-velocity frontend performance &amp; creative spatial interaction.</p>
+          </div>
+
+          <div class="pillar-card batman-pillar">
+            <div class="pillar-header">
+              <span class="pillar-icon">
+                <!-- Bat Cowl / Shield Icon -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2">
+                  <path d="M12 2l8 4.5v6c0 5-3.5 9.5-8 10.5-4.5-1-8-5.5-8-10.5v-6L12 2z"></path>
+                  <path d="M9 10l3 2 3-2"></path>
+                </svg>
+              </span>
+              <span class="pillar-tag">GOTHAM LOGIC</span>
+            </div>
+            <p class="pillar-text">Rock-solid system architecture, clean algorithms, deep precision &amp; AI neural computation.</p>
+          </div>
+        </div>
+
+        <!-- Call to Action Buttons -->
+        <div class="hero-cta-group fade-in-up" data-delay="750">
+          <a href="#skills" class="btn btn-hero btn-spider">
+            <span class="btn-glow-layer"></span>
+            <span class="btn-content">
+              <span class="btn-text">EXPLORE MY ARSENAL</span>
+              <span class="btn-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </span>
+          </a>
+
+          <a href="#contact" class="btn btn-hero btn-batman">
+            <span class="btn-glow-layer"></span>
+            <span class="btn-content">
+              <span class="btn-text">LET'S CONNECT</span>
+              <span class="btn-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M22 2L11 13"></path>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Glowing Animated Scroll Indicator -->
+        <div class="scroll-indicator-container">
+          <a href="#about" class="scroll-indicator" aria-label="Scroll down to About section">
+            <div class="scroll-mouse">
+              <div class="scroll-wheel"></div>
+            </div>
+            <span class="scroll-label">SCROLL TO EXPLORE</span>
+            <div class="scroll-chevrons">
+              <span class="chev chev-1"></span>
+              <span class="chev chev-2"></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. ABOUT ME SECTION ==================== -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-title-wrap reveal-on-scroll">
+          <div class="section-eyebrow">
+            <span class="eyebrow-accent accent-red"></span>
+            <span>ORIGIN STORY // DOSSIER</span>
+            <span class="eyebrow-accent accent-blue"></span>
+          </div>
+          <h2 class="section-heading">ABOUT <span class="gradient-text">AHAL ABBAS</span></h2>
+          <p class="section-subtext">First-Year B.Tech Computer Science student specializing in Artificial Intelligence and Machine Learning at SCTCE Trivandrum.</p>
+        </div>
+
+        <div class="about-grid">
+          <!-- Left: Heroic Profile Hologram & Visual Identity -->
+          <div class="about-visual-column reveal-on-scroll" data-delay="100">
+            <div class="hologram-card-wrap">
+              <div class="hologram-card" id="hologramCard">
+                <div class="card-edge-glow"></div>
+                <div class="hologram-scanner-line"></div>
+
+                <!-- Avatar Display Box -->
+                <div class="avatar-display-box">
+                  <div class="avatar-ambient-pulse"></div>
+                  <!-- Superhero Silhouette / Tech Avatar Canvas/SVG -->
+                  <div class="avatar-frame" id="avatarFrame">
+                    <svg viewBox="0 0 200 240" class="hero-avatar-svg" id="avatarSvg">
+                      <defs>
+                        <linearGradient id="avatarGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#ff2a5f"/>
+                          <stop offset="50%" stop-color="#3b82f6"/>
+                          <stop offset="100%" stop-color="#00b4d8"/>
+                        </linearGradient>
+                        <radialGradient id="eyeGlowRed" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stop-color="#ffffff"/>
+                          <stop offset="50%" stop-color="#ff2a5f"/>
+                          <stop offset="100%" stop-color="transparent"/>
+                        </radialGradient>
+                        <radialGradient id="eyeGlowBlue" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stop-color="#ffffff"/>
+                          <stop offset="50%" stop-color="#00b4d8"/>
+                          <stop offset="100%" stop-color="transparent"/>
+                        </radialGradient>
+                      </defs>
+
+                      <!-- Background Cyber Hex Grid -->
+                      <polygon points="100,15 175,55 175,185 100,225 25,185 25,55" fill="#0d1117" stroke="url(#avatarGlow)" stroke-width="2" opacity="0.6"/>
+                      
+                      <!-- Superhero Mask / Cowl Silhouette (Dual Spider/Batman fusion) -->
+                      <!-- Left Cowl / Bat Ear -->
+                      <path d="M100 40 L65 35 L62 70 L55 90 C 50 115 58 140 75 160 L100 178 Z" fill="#111827"/>
+                      <!-- Right Spider Mask -->
+                      <path d="M100 40 L135 35 L138 70 L145 90 C 150 115 142 140 125 160 L100 178 Z" fill="#1e1b4b"/>
+
+                      <!-- Bat Cowl Horn Left -->
+                      <polygon points="65,35 60,15 75,32" fill="#00b4d8" opacity="0.9"/>
+                      <!-- Spider Web Filaments Right -->
+                      <path d="M100 40 L138 55 M100 65 L142 75 M100 95 L144 105 M100 125 L135 135" stroke="#ff2a5f" stroke-width="1.5" opacity="0.75"/>
+
+                      <!-- Eyes (Hero Glow) -->
+                      <!-- Left Bat Slit Eye (Cyan) -->
+                      <polygon points="76,96 92,99 82,106" fill="url(#eyeGlowBlue)"/>
+                      <!-- Right Spider Eye (Glowing White/Red Angled Lens) -->
+                      <polygon points="124,96 108,99 118,106" fill="url(#eyeGlowRed)"/>
+
+                      <!-- Chest & Armor Plate -->
+                      <path d="M75 160 L50 210 L100 230 L150 210 L125 160 Z" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+                      <!-- Core Reactor / Emblem -->
+                      <circle cx="100" cy="190" r="12" fill="#050505" stroke="url(#avatarGlow)" stroke-width="2"/>
+                      <polygon points="100,183 106,193 94,193" fill="#ff2a5f"/>
+                      <polygon points="100,197 106,187 94,187" fill="#00b4d8"/>
+                    </svg>
+                  </div>
+
+                  <div class="avatar-controls">
+                    <button type="button" class="avatar-action-btn" id="avatar-change-btn" title="Change or Upload Profile Picture">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                      </svg>
+                      <span>SET PHOTO</span>
+                    </button>
+                    <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+                  </div>
+                </div>
+
+                <!-- Identity Badge Content -->
+                <div class="hologram-info">
+                  <div class="hologram-id-tag">OPERATOR // FIRST YEAR CSE (AI &amp; ML)</div>
+                  <h3 class="hologram-name" id="hologram-display-name">AHAL ABBAS</h3>
+                  <div class="hologram-role">SCTCE TRIVANDRUM // FUTURE DEVELOPER</div>
+
+                  <!-- Quick Stats Bar -->
+                  <div class="hologram-stats">
+                    <div class="h-stat">
+                      <span class="h-stat-num">AI &amp; ML</span>
+                      <span class="h-stat-lbl">SPECIALIZATION</span>
+                    </div>
+                    <div class="h-stat">
+                      <span class="h-stat-num">1ST YEAR</span>
+                      <span class="h-stat-lbl">B.TECH CSE</span>
+                    </div>
+                    <div class="h-stat">
+                      <span class="h-stat-num">SCTCE</span>
+                      <span class="h-stat-lbl">COLLEGE</span>
+                    </div>
+                  </div>
+
+                  <!-- Resume Download / Dossier -->
+                  <div class="hologram-actions">
+                    <button type="button" class="btn btn-sm btn-hud-block" id="open-dossier-modal">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      <span>VIEW FULL DOSSIER / CV</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Narrative, Passions & Ambitions -->
+          <div class="about-content-column reveal-on-scroll" data-delay="250">
+            <div class="intel-card narrative-card">
+              <div class="card-corner corner-tl"></div>
+              <div class="card-corner corner-tr"></div>
+              <div class="card-corner corner-bl"></div>
+              <div class="card-corner corner-br"></div>
+
+              <div class="intel-badge">
+                <span class="badge-icon">⚡</span>
+                <span>ORIGIN &amp; ENGINEERING AMBITION</span>
+              </div>
+
+              <p class="intel-lead">
+                I am <span class="text-glow-red">Ahal Abbas</span>, a first-year Computer Science and Engineering student specializing in <span class="text-glow-blue">Artificial Intelligence and Machine Learning</span> at Sree Chitra Thirunal College of Engineering (SCTCE), Trivandrum.
+              </p>
+
+              <p class="intel-body">
+                Driven by curiosity, I explore the intersections of intelligent algorithms, computational logic in C++ and Python, and modern interactive web engineering. I believe in mastering technical fundamentals from the ground up—building systems with precision, logic, and boundless creative energy.
+              </p>
+
+              <div class="quote-box">
+                <span class="quote-mark">“</span>
+                <p class="quote-text">With great code comes great responsibility. In the darkest bugs and most complex neural matrices, the cleanest logic prevails.</p>
+              </div>
+            </div>
+
+            <!-- Tabbed Interests & Ambitions -->
+            <div class="intel-dual-cards">
+              <!-- Passions & Interests -->
+              <div class="intel-card sub-card">
+                <div class="sub-card-header">
+                  <div class="sub-card-icon icon-spider">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff2a5f" stroke-width="2">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </div>
+                  <h4 class="sub-card-title">Interests &amp; Passions</h4>
+                </div>
+                <ul class="intel-list">
+                  <li><span class="bullet-dot red"></span><strong>AI &amp; Machine Learning:</strong> Neural architectures, pattern recognition, and smart automation.</li>
+                  <li><span class="bullet-dot red"></span><strong>Core Systems &amp; Logic:</strong> Algorithmic problem-solving in C++ and Python.</li>
+                  <li><span class="bullet-dot red"></span><strong>Creative Web Development:</strong> Responsive UI, Canvas interactions, and fluid design.</li>
+                  <li><span class="bullet-dot red"></span><strong>Creative Editing &amp; VFX:</strong> Visual storytelling, video pacing, and motion graphics.</li>
+                </ul>
+              </div>
+
+              <!-- Goals & Ambitions -->
+              <div class="intel-card sub-card">
+                <div class="sub-card-header">
+                  <div class="sub-card-icon icon-batman">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                  </div>
+                  <h4 class="sub-card-title">Goals &amp; Ambitions</h4>
+                </div>
+                <ul class="intel-list">
+                  <li><span class="bullet-dot blue"></span><strong>AI/ML Mastery:</strong> Excelling throughout the B.Tech program at SCTCE Trivandrum.</li>
+                  <li><span class="bullet-dot blue"></span><strong>Software Craftsmanship:</strong> Building resilient full-stack applications with elegant architectures.</li>
+                  <li><span class="bullet-dot blue"></span><strong>Impactful Innovation:</strong> Developing AI-powered tools that solve real-world community challenges.</li>
+                  <li><span class="bullet-dot blue"></span><strong>Continuous Exploration:</strong> Constantly expanding technical horizons across deep tech.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. SKILLS & TECHNOLOGIES ==================== -->
+    <section id="skills" class="section skills-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-title-wrap reveal-on-scroll">
+          <div class="section-eyebrow">
+            <span class="eyebrow-accent accent-red"></span>
+            <span>TACTICAL ARSENAL // TECH STACK</span>
+            <span class="eyebrow-accent accent-blue"></span>
+          </div>
+          <h2 class="section-heading">SKILLS &amp; <span class="gradient-text">TECHNOLOGIES</span></h2>
+          <p class="section-subtext">Engineered for speed, durability, and computational power. Hover over any tool in the arsenal to inspect its tactical profile.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="skills-filter-tabs reveal-on-scroll" data-delay="100">
+          <button type="button" class="skill-tab-btn active" data-filter="all">ALL WEAPONS (8)</button>
+          <button type="button" class="skill-tab-btn" data-filter="core">WEB CORE</button>
+          <button type="button" class="skill-tab-btn" data-filter="systems">LANGUAGES &amp; SYSTEMS</button>
+          <button type="button" class="skill-tab-btn" data-filter="creative">CREATIVE &amp; UI/UX</button>
+        </div>
+
+        <!-- Skills Grid (All 8 Required Skills) -->
+        <div class="skills-grid" id="skillsGrid">
+
+          <!-- 1. HTML -->
+          <div class="skill-card reveal-on-scroll" data-category="core" data-delay="100">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-html">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#e34f26" stroke-width="2">
+                  <path d="M4 3l1.8 16.5L12 21.5l6.2-2L20 3H4z"></path>
+                  <path d="M7 7h10M7 11h9M8 15h7l-.5 3-2.5.7-2.5-.7-.2-1.5"></path>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">HTML</h3>
+                <span class="skill-tier">SEMANTIC &amp; CANVAS</span>
+              </div>
+              <span class="skill-percent">98%</span>
+            </div>
+            <p class="skill-desc">Semantic HTML5, DOM architecture, Accessible ARIA standards, HTML5 Canvas 2D engine integration, and SEO optimization.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-red" style="--target-width: 98%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">HTML5</span>
+              <span class="mini-tag">Canvas 2D</span>
+              <span class="mini-tag">Semantic SEO</span>
+              <span class="mini-tag">A11y</span>
+            </div>
+          </div>
+
+          <!-- 2. CSS -->
+          <div class="skill-card reveal-on-scroll" data-category="core" data-delay="150">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-css">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#264de4" stroke-width="2">
+                  <path d="M4 3l1.8 16.5L12 21.5l6.2-2L20 3H4z"></path>
+                  <path d="M16.5 7H7.5l.3 4h8.4l-.6 6-3.6 1.1-3.6-1.1-.2-2.5"></path>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">CSS</h3>
+                <span class="skill-tier">MODERN &amp; ANIMATED</span>
+              </div>
+              <span class="skill-percent">96%</span>
+            </div>
+            <p class="skill-desc">Advanced CSS3, Flexbox/Grid, 3D Hardware-Accelerated Transforms, Custom Properties, Glassmorphism, and Keyframe choreography.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-blue" style="--target-width: 96%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">CSS3 / Grid</span>
+              <span class="mini-tag">3D Transforms</span>
+              <span class="mini-tag">Keyframes</span>
+              <span class="mini-tag">Neumorphism</span>
+            </div>
+          </div>
+
+          <!-- 3. JavaScript -->
+          <div class="skill-card reveal-on-scroll" data-category="core" data-delay="200">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-js">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#f7df1e" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                  <path d="M16 8v8a2 2 0 0 1-2 2h-1"></path>
+                  <path d="M10 15c0 1.1-.9 2-2 2a2 2 0 0 1-2-2"></path>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">JavaScript</h3>
+                <span class="skill-tier">ESNEXT &amp; WEB APIS</span>
+              </div>
+              <span class="skill-percent">95%</span>
+            </div>
+            <p class="skill-desc">ES6+ mastery, Async/Await concurrency, Web Audio API synthesis, Web Workers, event delegation, and procedural math algorithms.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-gold" style="--target-width: 95%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">ES6+</span>
+              <span class="mini-tag">Web Audio</span>
+              <span class="mini-tag">Async / Microtasks</span>
+              <span class="mini-tag">DOM Mastery</span>
+            </div>
+          </div>
+
+          <!-- 4. C++ -->
+          <div class="skill-card reveal-on-scroll" data-category="systems" data-delay="250">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-cpp">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00599c" stroke-width="2">
+                  <polygon points="12 2 21 7.5 21 16.5 12 22 3 16.5 3 7.5 12 2"></polygon>
+                  <path d="M9 12h6M12 9v6M17 10v4M19 12h-4"></path>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">C++</h3>
+                <span class="skill-tier">HIGH-PERFORMANCE SYSTEMS</span>
+              </div>
+              <span class="skill-percent">88%</span>
+            </div>
+            <p class="skill-desc">Low-level memory management, Object-Oriented design, STL algorithms, pointers, computational performance, and data structures.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-blue" style="--target-width: 88%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">Modern C++</span>
+              <span class="mini-tag">Data Structures</span>
+              <span class="mini-tag">Memory Safety</span>
+              <span class="mini-tag">Algorithms</span>
+            </div>
+          </div>
+
+          <!-- 5. Python -->
+          <div class="skill-card reveal-on-scroll" data-category="systems" data-delay="300">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-python">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#3776ab" stroke-width="2">
+                  <path d="M12 2c-4 0-5 2-5 4v2h6v1H6c-3 0-5 2-5 5s2 5 5 5h2v-2c0-2 2-3 4-3h4c2 0 3-1 3-3V6c0-2-2-4-7-4z"></path>
+                  <circle cx="9" cy="5" r="1" fill="#3776ab"></circle>
+                  <circle cx="15" cy="19" r="1" fill="#ffd43b"></circle>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">Python</h3>
+                <span class="skill-tier">AI, ML &amp; DATA ENGINE</span>
+              </div>
+              <span class="skill-percent">92%</span>
+            </div>
+            <p class="skill-desc">Machine learning data manipulation, algorithm scripting, backend services, API creation, and numerical computation toolkits.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-gold" style="--target-width: 92%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">Python for AI</span>
+              <span class="mini-tag">NumPy / Pandas</span>
+              <span class="mini-tag">Scripting</span>
+              <span class="mini-tag">FastAPI</span>
+            </div>
+          </div>
+
+          <!-- 6. Web Development -->
+          <div class="skill-card reveal-on-scroll" data-category="core" data-delay="350">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-web">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00b4d8" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">Web Development</h3>
+                <span class="skill-tier">FULL-STACK &amp; ARCHITECTURE</span>
+              </div>
+              <span class="skill-percent">95%</span>
+            </div>
+            <p class="skill-desc">Full-cycle web application delivery, responsive fluid design, state management, client-server communication, and performance profiling.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-purple" style="--target-width: 95%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">Full-Stack</span>
+              <span class="mini-tag">Responsive UX</span>
+              <span class="mini-tag">Performance</span>
+              <span class="mini-tag">Modern Web</span>
+            </div>
+          </div>
+
+          <!-- 7. UI/UX Design -->
+          <div class="skill-card reveal-on-scroll" data-category="creative" data-delay="400">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-design">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#ff2a5f" stroke-width="2">
+                  <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                  <path d="M2 2l7.586 7.586"></path>
+                  <circle cx="11" cy="11" r="2"></circle>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">UI/UX Design</h3>
+                <span class="skill-tier">SYSTEMS &amp; INTERFACES</span>
+              </div>
+              <span class="skill-percent">90%</span>
+            </div>
+            <p class="skill-desc">Design systems, wireframing, high-fidelity prototypes, user empathy mapping, micro-interactions, dark mode heuristics, and accessibility.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-red" style="--target-width: 90%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">Design Systems</span>
+              <span class="mini-tag">Micro-Interactions</span>
+              <span class="mini-tag">Wireframing</span>
+              <span class="mini-tag">Figma Flow</span>
+            </div>
+          </div>
+
+          <!-- 8. Creative Editing -->
+          <div class="skill-card reveal-on-scroll" data-category="creative" data-delay="450">
+            <div class="skill-card-glow"></div>
+            <div class="skill-header">
+              <div class="skill-icon-wrap icon-edit">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#a855f7" stroke-width="2">
+                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                  <circle cx="8" cy="12" r="2.5"></circle>
+                </svg>
+              </div>
+              <div class="skill-title-meta">
+                <h3 class="skill-name">Creative Editing</h3>
+                <span class="skill-tier">CINEMATOGRAPHY &amp; MOTION</span>
+              </div>
+              <span class="skill-percent">92%</span>
+            </div>
+            <p class="skill-desc">Cinematic video pacing, motion graphics, audio sync, sound design, color grading, visual effects (VFX) composition, and creative direction.</p>
+            <div class="progress-track">
+              <div class="progress-bar bar-purple" style="--target-width: 92%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span class="mini-tag">VFX / Motion</span>
+              <span class="mini-tag">Color Grading</span>
+              <span class="mini-tag">Audio Design</span>
+              <span class="mini-tag">Cinematic Timing</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. EXPERIENCE & EDUCATION ==================== -->
+    <section id="experience" class="section experience-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-title-wrap reveal-on-scroll">
+          <div class="section-eyebrow">
+            <span class="eyebrow-accent accent-red"></span>
+            <span>CHRONICLES // TRAINING &amp; ACHIEVEMENTS</span>
+            <span class="eyebrow-accent accent-blue"></span>
+          </div>
+          <h2 class="section-heading">EXPERIENCE &amp; <span class="gradient-text">EDUCATION</span></h2>
+          <p class="section-subtext">The chronological journey of mastering computer science, artificial intelligence, and software engineering.</p>
+        </div>
+
+        <!-- Modern Superhero Conduit Timeline -->
+        <div class="timeline-container">
+          <div class="timeline-conduit-line">
+            <div class="conduit-pulse"></div>
+          </div>
+
+          <!-- Timeline Item 1: B.Tech CSE (AI & ML) 2026 to 2030 -->
+          <div class="timeline-item reveal-on-scroll" data-delay="100">
+            <div class="timeline-marker marker-spider">
+              <span class="marker-dot"></span>
+            </div>
+            <div class="timeline-card">
+              <div class="timeline-badge badge-spider">CURRENT ACADEMIC PURSUIT</div>
+              <span class="timeline-date">2026 — 2030</span>
+              <h3 class="timeline-title">B.Tech in Computer Science &amp; Engineering (AI &amp; ML)</h3>
+              <h4 class="timeline-organization">Sree Chitra Thirunal College of Engineering (SCTCE), Trivandrum</h4>
+              <p class="timeline-text">
+                Currently pursuing undergraduate engineering degree in Computer Science with specialization in Artificial Intelligence and Machine Learning. Focused on core data structures, algorithms, neural computing logic, Python, C++, and modern software engineering.
+              </p>
+              <div class="timeline-tags">
+                <span class="mini-tag">B.Tech CSE (AI &amp; ML)</span>
+                <span class="mini-tag">SCTCE Trivandrum</span>
+                <span class="mini-tag">2026 — 2030</span>
+                <span class="mini-tag">Python &amp; C++</span>
+                <span class="mini-tag">Neural Computing</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Item 2: Plus Two (+2) Computer Science 2024 to 2026 -->
+          <div class="timeline-item reveal-on-scroll" data-delay="200">
+            <div class="timeline-marker marker-batman">
+              <span class="marker-dot"></span>
+            </div>
+            <div class="timeline-card">
+              <div class="timeline-badge badge-batman">ACADEMIC FOUNDATION</div>
+              <span class="timeline-date">2024 — 2026</span>
+              <h3 class="timeline-title">Higher Secondary (+2) in Computer Science</h3>
+              <h4 class="timeline-organization">Higher Secondary Board of Education</h4>
+              <p class="timeline-text">
+                Completed Plus Two (+2) with Computer Science stream. Built strong foundational proficiency in programming concepts, computational logic, mathematics, and computer science fundamentals.
+              </p>
+              <div class="timeline-tags">
+                <span class="mini-tag">Plus Two (+2)</span>
+                <span class="mini-tag">Computer Science</span>
+                <span class="mini-tag">2024 — 2026</span>
+                <span class="mini-tag">Mathematics</span>
+                <span class="mini-tag">Programming Basics</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. CONTACT SECTION ==================== -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-title-wrap reveal-on-scroll">
+          <div class="section-eyebrow">
+            <span class="eyebrow-accent accent-red"></span>
+            <span>TRANSMISSION SIGNAL // COMMUNICATOR</span>
+            <span class="eyebrow-accent accent-blue"></span>
+          </div>
+          <h2 class="section-heading">LET'S <span class="gradient-text">CONNECT</span></h2>
+          <p class="section-subtext">Have a collaborative opportunity, an AI/ML concept, or an innovative venture? Project the signal and let's connect.</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Left: Direct Channels & Social Hub -->
+          <div class="contact-channels-column reveal-on-scroll" data-delay="100">
+            <div class="channel-card">
+              <div class="channel-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot blue"></span>
+                <span class="terminal-title">DIRECT CHANNELS // ENCRYPTED</span>
+              </div>
+
+              <!-- Quick Status -->
+              <div class="contact-availability">
+                <span class="avail-dot"></span>
+                <div class="avail-text">
+                  <strong>STATUS: ONLINE &amp; RESPONSIVE</strong>
+                  <span>SCTCE Trivandrum student available for tech collaborations, internships, and AI exploration.</span>
+                </div>
+              </div>
+
+              <!-- Social Links Cards (LinkedIn, Email, GitHub, Instagram) -->
+              <div class="social-channels-list">
+
+                <!-- LINKEDIN (User's Exact Verified Profile) -->
+                <a href="https://www.linkedin.com/in/ahal-abbas-74054839a?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="channel-item channel-link">
+                  <div class="channel-icon icon-linkedin">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                      <rect x="2" y="9" width="4" height="12"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                  </div>
+                  <div class="channel-info">
+                    <span class="channel-label">LINKEDIN PROFILE</span>
+                    <span class="channel-value">linkedin.com/in/ahal-abbas-74054839a</span>
+                  </div>
+                  <span class="channel-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </span>
+                </a>
+
+                <!-- EMAIL TRANSMISSION -->
+                <div class="channel-item">
+                  <div class="channel-icon icon-email">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff2a5f" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                  <div class="channel-info">
+                    <span class="channel-label">EMAIL TRANSMISSION</span>
+                    <a href="mailto:ahalabbas2008@gmail.com" class="channel-value" id="display-contact-email">ahalabbas2008@gmail.com</a>
+                  </div>
+                  <button type="button" class="btn-copy-channel" data-copy-val="ahalabbas2008@gmail.com" title="Copy Email Address">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>COPY</span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Tactical Transmission Form -->
+          <div class="contact-form-column reveal-on-scroll" data-delay="250">
+            <div class="form-container-card">
+              <div class="form-header">
+                <div class="form-title-group">
+                  <span class="form-signal-icon">⚡</span>
+                  <h3 class="form-title">PROJECT THE SIGNAL</h3>
+                </div>
+                <span class="form-id">ENCRYPT: TLS-256</span>
+              </div>
+
+              <form id="contactForm" class="tactical-form" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="contact-name" class="form-label">YOUR CODENAME / NAME *</label>
+                    <input type="text" id="contact-name" name="name" class="form-control" placeholder="e.g. Fellow Engineer or Recruiter" required>
+                    <span class="form-error-msg" id="name-error">Please enter your name.</span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contact-email" class="form-label">YOUR EMAIL ADDRESS *</label>
+                    <input type="email" id="contact-email" name="email" class="form-control" placeholder="you@domain.com" required>
+                    <span class="form-error-msg" id="email-error">Please enter a valid email.</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-subject" class="form-label">MISSION OBJECTIVE / SUBJECT *</label>
+                  <input type="text" id="contact-subject" name="subject" class="form-control" placeholder="e.g. AI Collaboration / Internship / Tech Chat" required>
+                  <span class="form-error-msg" id="subject-error">Please enter a subject.</span>
+                </div>
+
+                <!-- Priority Selector -->
+                <div class="form-group">
+                  <label class="form-label">MISSION PRIORITY LEVEL</label>
+                  <div class="priority-selector">
+                    <label class="priority-opt">
+                      <input type="radio" name="priority" value="Standard" checked>
+                      <span class="priority-btn">STANDARD MISSION</span>
+                    </label>
+                    <label class="priority-opt">
+                      <input type="radio" name="priority" value="Urgent">
+                      <span class="priority-btn priority-urgent">HIGH PRIORITY</span>
+                    </label>
+                    <label class="priority-opt">
+                      <input type="radio" name="priority" value="Bat-Signal">
+                      <span class="priority-btn priority-signal">BAT-SIGNAL ALERT</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-message" class="form-label">TRANSMISSION MESSAGE *</label>
+                  <textarea id="contact-message" name="message" rows="5" class="form-control" placeholder="Brief me on the project parameters, goals, timeline, and vision..." required></textarea>
+                  <span class="form-error-msg" id="message-error">Please enter your message.</span>
+                </div>
+
+                <button type="submit" class="btn btn-hero btn-submit" id="submitContactBtn">
+                  <span class="btn-glow-layer"></span>
+                  <span class="btn-content">
+                    <span class="btn-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                      </svg>
+                    </span>
+                    <span class="btn-text" id="submitBtnText">TRANSMIT MESSAGE</span>
+                  </span>
+                </button>
+              </form>
+
+              <!-- Success Alert Box (Initially Hidden) -->
+              <div class="form-success-box" id="formSuccessBox">
+                <div class="success-icon">✓</div>
+                <h4 class="success-title">TRANSMISSION RECEIVED</h4>
+                <p class="success-desc">Your message has been logged in Ahal Abbas's terminal. Expect a response promptly.</p>
+                <button type="button" class="btn btn-sm btn-outline-glow" id="resetFormBtn">SEND ANOTHER TRANSMISSION</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">AHAL<span class="brand-dot">.ABBAS</span></span>
+          <p class="footer-motto">SCTCE Trivandrum // B.Tech CSE (AI &amp; ML) // Spider-Agility &amp; Gotham Precision.</p>
+        </div>
+
+        <div class="footer-nav">
+          <a href="#hero">Home</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Timeline</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom">
+        <p class="copyright-text">
+          &copy; <span id="currentYear">2026</span> <span id="footer-owner-name">AHAL ABBAS</span>. All rights reserved across the multiverse.
+        </p>
+        <div class="footer-badges">
+          <span class="tech-badge">SCTCE TRIVANDRUM</span>
+          <span class="tech-badge">CSE (AI &amp; ML)</span>
+          <span class="tech-badge">60 FPS CANVAS ENGINE</span>
+          <span class="tech-badge">WEB AUDIO API</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== INTERACTIVE MODALS ==================== -->
+
+  <!-- 1. Identity Customizer Modal -->
+  <div class="modal-backdrop" id="customizerModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">⚙️</span>
+          <h3 class="modal-title">CUSTOMIZE HERO IDENTITY</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="close-customizer-modal" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-help">Instantly modify your display name, contact email, and superhero atmospheric glow.</p>
+        
+        <div class="modal-form-group">
+          <label for="custom-name-input" class="form-label">YOUR FULL NAME / CODENAME</label>
+          <input type="text" id="custom-name-input" class="form-control" placeholder="AHAL ABBAS">
+        </div>
+
+        <div class="modal-form-group">
+          <label for="custom-email-input" class="form-label">YOUR CONTACT EMAIL</label>
+          <input type="email" id="custom-email-input" class="form-control" placeholder="ahalabbas2008@gmail.com">
+        </div>
+
+        <div class="modal-form-group">
+          <label class="form-label">ACCENT ATMOSPHERE</label>
+          <div class="accent-select-row">
+            <button type="button" class="accent-choice-btn active" data-pick="dual">DUAL MULTIVERSE (RED &amp; BLUE)</button>
+            <button type="button" class="accent-choice-btn" data-pick="spider">SPIDER CRIMSON</button>
+            <button type="button" class="accent-choice-btn" data-pick="batman">GOTHAM CYAN</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" id="cancel-customizer">CANCEL</button>
+        <button type="button" class="btn btn-sm btn-hero btn-spider" id="save-customizer">APPLY IDENTITY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Dossier / Resume Modal -->
+  <div class="modal-backdrop" id="dossierModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">📄</span>
+          <h3 class="modal-title">TACTICAL DOSSIER // CURRICULUM VITAE</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="close-dossier-modal" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="dossier-header-block">
+          <h2 class="dossier-name" id="dossier-name">AHAL ABBAS</h2>
+          <div class="dossier-role">B.Tech in Computer Science (Artificial Intelligence &amp; Machine Learning)</div>
+          <div class="dossier-contacts">
+            <span>Sree Chitra Thirunal College of Engineering (SCTCE), Trivandrum</span><br>
+            <span><a href="mailto:ahalabbas2008@gmail.com" style="color:#ff2a5f;text-decoration:underline;">ahalabbas2008@gmail.com</a></span> • <span><a href="https://www.linkedin.com/in/ahal-abbas-74054839a?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" style="color:#00b4d8;text-decoration:underline;">linkedin.com/in/ahal-abbas-74054839a</a></span>
+          </div>
+        </div>
+
+        <div class="dossier-section">
+          <h4 class="dossier-sec-title">EXECUTIVE PROFILE</h4>
+          <p class="dossier-sec-text">
+            Ambitious Computer Science &amp; Engineering student specializing in Artificial Intelligence and Machine Learning at SCTCE Trivandrum. Dedicated to learning deep systems engineering, data structures, algorithms in C++ and Python, and modern software design.
+          </p>
+        </div>
+
+        <div class="dossier-section">
+          <h4 class="dossier-sec-title">EDUCATION &amp; QUALIFICATIONS</h4>
+          <p class="dossier-sec-text">
+            <strong>B.Tech in Computer Science &amp; Engineering (Artificial Intelligence and Machine Learning)</strong><br>
+            <em>Sree Chitra Thirunal College of Engineering (SCTCE), Trivandrum</em><br>
+            <span>2026 — 2030 (Currently Pursuing)</span>
+          </p>
+          <p class="dossier-sec-text" style="margin-top: 10px;">
+            <strong>Higher Secondary (+2) in Computer Science</strong><br>
+            <em>Higher Secondary Board of Education</em><br>
+            <span>2024 — 2026</span>
+          </p>
+        </div>
+
+        <div class="dossier-section">
+          <h4 class="dossier-sec-title">TECHNICAL FOUNDATIONS</h4>
+          <div class="dossier-skills-list">
+            <div><strong>Programming &amp; Systems:</strong> Python, C++, JavaScript (ES6+), HTML5, CSS3</div>
+            <div><strong>Specialization Domains:</strong> AI/ML Foundations, Algorithmic Problem Solving, Data Structures</div>
+            <div><strong>Creative &amp; Web:</strong> Web Development, UI/UX Design, Micro-Interactions, Creative Video Editing &amp; VFX</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" id="close-dossier-btn">CLOSE</button>
+        <button type="button" class="btn btn-sm btn-hero btn-batman" id="print-dossier-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>PRINT / SAVE AS PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="audio.js"></script>
+  <script src="background.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
